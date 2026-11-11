@@ -141,11 +141,13 @@ function App() {
   }
 
   const addToCart = (product) => {
+    const isSale = product.price < 600
+    const salePrice = isSale ? product.price * 0.7 : product.price
     const existing = cart.find(item => item.id === product.id)
     if (existing) {
       setCart(cart.map(item => item.id === product.id ? {...item, quantity: item.quantity + 1} : item))
     } else {
-      setCart([...cart, {...product, quantity: 1}])
+      setCart([...cart, {...product, quantity: 1, isSale, salePrice, originalPrice: product.price}])
     }
   }
 
@@ -177,7 +179,7 @@ function App() {
     }
   }
 
-  const cartTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0)
+  const cartTotal = cart.reduce((sum, item) => sum + ((item.salePrice || item.price) * item.quantity), 0)
 
   const handleCheckout = () => {
     if (cart.length > 0) {
@@ -482,7 +484,16 @@ function App() {
                   <img src={item.image_url || 'https://via.placeholder.com/80'} alt={item.name} onError={(e) => e.target.src = 'https://via.placeholder.com/80/ff1493/ffffff?text=Product'} />
                   <div className="modal-item-info">
                     <h4>{item.name}</h4>
-                    <p>₹{item.price} x {item.quantity}</p>
+                    {item.isSale && <span className="sale-tag">30% OFF</span>}
+                    {item.isSale ? (
+                      <p>
+                        <span className="original-price">₹{item.originalPrice}</span>
+                        <span className="sale-price">₹{item.salePrice.toFixed(2)}</span>
+                        <span> x {item.quantity}</span>
+                      </p>
+                    ) : (
+                      <p>₹{item.price} x {item.quantity}</p>
+                    )}
                     <div className="quantity-controls">
                       <button onClick={() => setCart(cart.map(i => i.id === item.id ? {...i, quantity: Math.max(1, i.quantity - 1)} : i))}>-</button>
                       <span>{item.quantity}</span>
