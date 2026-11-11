@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head><title>Test</title></head>
+<body>
+<h1>Products</h1>
+<div id="products"></div>
+<script>
+fetch('/api/products/?limit=10')
+  .then(r => r.json())
+  .then(data => {
+    document.getElementById('products').innerHTML = 
+      '<p>Found: ' + data.length + ' products</p>' +
+      data.map(p => '<div>' + p.name + ' - ₹' + p.price + '</div>').join('');
+  })
+  .catch(e => {
+    document.getElementById('products').innerHTML = 'Error: ' + e;
+  });
+</script>
+</body>
+</html>

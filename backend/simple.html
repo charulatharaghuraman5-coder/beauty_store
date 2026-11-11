@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head><title>Beauty Store</title></head>
+<body>
+<h1>Beauty Products</h1>
+<div id="products"></div>
+<script>
+fetch('/api/products/?limit=1000').then(r=>r.json()).then(d=>{
+document.getElementById('products').innerHTML=d.map(p=>`<div style="border:1px solid #ccc;padding:10px;margin:10px"><img src="${p.image_url}" width="200"><h3>${p.name}</h3><p>Price: ₹${p.price}</p><p>Category: ${p.category}</p></div>`).join('');
+}).catch(e=>document.getElementById('products').innerHTML='Error: '+e);
+</script>
+</body>
+</html>

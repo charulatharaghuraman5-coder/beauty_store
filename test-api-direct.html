@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Products</title>
+</head>
+<body>
+    <h1>Products Test</h1>
+    <div id="products"></div>
+    <script>
+        fetch('/api/products/?limit=10')
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('products').innerHTML = data.map(p => 
+                    `<div style="border:1px solid #ccc; padding:10px; margin:10px;">
+                        <h3>${p.name}</h3>
+                        <p>Price: ₹${p.price}</p>
+                        <p>Brand: ${p.brand}</p>
+                    </div>`
+                ).join('');
+            })
+            .catch(e => {
+                document.getElementById('products').innerHTML = 'Error: ' + e.message;
+            });
+    </script>
+</body>
+</html>

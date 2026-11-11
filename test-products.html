@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Products</title>
+</head>
+<body>
+    <h1>Products Test</h1>
+    <div id="result"></div>
+    <script>
+        fetch('http://localhost:8000/api/products/?limit=5')
+            .then(r => r.json())
+            .then(data => {
+                document.getElementById('result').innerHTML = 
+                    '<p>Found ' + data.length + ' products</p>' +
+                    '<pre>' + JSON.stringify(data, null, 2) + '</pre>';
+            })
+            .catch(e => {
+                document.getElementById('result').innerHTML = 'Error: ' + e;
+            });
+    </script>
+</body>
+</html>

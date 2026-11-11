@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Beauty Store - Open Frontend</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            color: #333;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        h1 { color: #667eea; margin-top: 0; }
+        .btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: #667eea;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            margin: 10px 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        .btn:hover {
+            background: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .info {
+            background: #f0f4ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 4px solid #667eea;
+        }
+        code {
+            background: #e8eaf6;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌸 Beauty Store Frontend</h1>
+        
+        <div class="info">
+            <h3>⚠️ Cookie Settings Required</h3>
+            <p>To access the application, you need to enable third-party cookies for SageMaker Studio:</p>
+            <ol>
+                <li>Open your browser settings</li>
+                <li>Enable third-party cookies or add exceptions for:
+                    <ul>
+                        <li><code>[*.]sagemaker.aws</code></li>
+                        <li><code>[*.]amazonaws.com</code></li>
+                    </ul>
+                </li>
+                <li>Refresh this page</li>
+            </ol>
+        </div>
+
+        <h3>Access Your Application:</h3>
+        <p>
+            <a href="/proxy/5173/" class="btn" target="_blank">🚀 Open Frontend (Port 5173)</a>
+            <a href="/proxy/8000/" class="btn" target="_blank">📡 Open Backend API (Port 8000)</a>
+        </p>
+
+        <div class="info">
+            <h3>📝 Manual URLs:</h3>
+            <p>Frontend: <code>https://[your-domain].studio.us-east-1.sagemaker.aws/proxy/5173/</code></p>
+            <p>Backend: <code>https://[your-domain].studio.us-east-1.sagemaker.aws/proxy/8000/</code></p>
+        </div>
+    </div>
+</body>
+</html>

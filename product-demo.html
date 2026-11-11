@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Beauty Store - Product</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            font-family: Arial, sans-serif; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 400px; margin: 50px auto; }
+        .product-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .product-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+        }
+        .product-info {
+            padding: 20px;
+        }
+        .brand {
+            color: #667eea;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+        .name {
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .category {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .price {
+            font-size: 24px;
+            color: #667eea;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+        .description {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .btn:hover {
+            background: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="product-card">
+            <img class="product-image" src="https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400" alt="Product">
+            <div class="product-info">
+                <div class="brand">Maybelline</div>
+                <div class="name">Matte Lipstick - Ruby Red</div>
+                <div class="category">Makeup</div>
+                <div class="price">₹599</div>
+                <div class="description">Long-lasting matte lipstick with rich color and comfortable wear. Perfect for all-day beauty.</div>
+                <button class="btn">Add to Cart</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

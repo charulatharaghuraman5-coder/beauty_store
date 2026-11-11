@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Status Check</title>
+<style>body{font-family:Arial;padding:20px;} .ok{color:green;} .fail{color:red;}</style>
+</head>
+<body>
+<h1>Beauty Store Status</h1>
+<div id="status">Checking...</div>
+<script>
+async function check() {
+  let html = '<h2>Backend API</h2>';
+  try {
+    const r = await fetch('/api/health');
+    const d = await r.json();
+    html += '<p class="ok">✓ Health: ' + d.status + '</p>';
+  } catch(e) {
+    html += '<p class="fail">✗ Health check failed</p>';
+  }
+  
+  try {
+    const r = await fetch('/api/products/?limit=5');
+    const d = await r.json();
+    html += '<p class="ok">✓ Products API: ' + d.length + ' products loaded</p>';
+    html += '<pre>' + JSON.stringify(d[0], null, 2) + '</pre>';
+  } catch(e) {
+    html += '<p class="fail">✗ Products API failed: ' + e + '</p>';
+  }
+  
+  document.getElementById('status').innerHTML = html;
+}
+check();
+</script>
+</body>
+</html>

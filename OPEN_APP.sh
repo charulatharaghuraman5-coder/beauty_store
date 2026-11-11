@@ -1,0 +1,13 @@
+#!/bin/bash
+echo "================================"
+echo "Beauty Store is running!"
+echo "================================"
+echo ""
+echo "Access your app at:"
+echo "https://[your-sagemaker-domain].studio.[region].sagemaker.aws/jupyter/default/proxy/8000/"
+echo ""
+echo "Or look for 'Open Application' button in SageMaker Studio"
+echo ""
+echo "Backend API: Port 8000"
+echo "Products in database: $(python3 -c "import sqlite3; conn = sqlite3.connect('backend/beauty.db'); print(conn.execute('SELECT COUNT(*) FROM products').fetchone()[0]); conn.close()")"
+echo "================================"

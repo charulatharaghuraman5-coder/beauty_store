@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beauty Store</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #fff5f7 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 600px;
+        }
+        h1 { color: #ff1493; font-size: 3rem; margin-bottom: 20px; }
+        p { font-size: 1.2rem; margin: 15px 0; }
+        a { color: #ff1493; text-decoration: none; font-weight: bold; padding: 10px 20px; border: 2px solid #ff1493; border-radius: 25px; display: inline-block; margin: 10px; transition: all 0.3s; }
+        a:hover { background: #ff1493; color: white; }
+        .status { color: #4caf50; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌸 Beauty Store</h1>
+        <p class="status">✅ Application Running Successfully!</p>
+        <p>Backend API is live and serving requests</p>
+        <div style="margin-top: 30px;">
+            <a href="/docs" target="_blank">📚 API Documentation</a>
+            <a href="/health" target="_blank">💚 Health Check</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head><title>API Test</title></head>
+<body>
+<h1>Products:</h1>
+<div id="result"></div>
+<script>
+fetch('/api/products/')
+  .then(r => r.json())
+  .then(d => {
+    document.getElementById('result').innerHTML = '<pre>' + JSON.stringify(d, null, 2) + '</pre>';
+  })
+  .catch(e => {
+    document.getElementById('result').innerHTML = 'Error: ' + e;
+  });
+</script>
+</body>
+</html>
