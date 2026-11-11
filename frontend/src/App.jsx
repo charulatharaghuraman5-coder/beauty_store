@@ -329,23 +329,27 @@ function App() {
             </div>
           </div>
           <div className="ads-section">
-            <div className="ad-card" onClick={() => { setView('products'); handleCategoryFilter('Makeup'); }}>
-              <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600" alt="Makeup" />
-              <div className="ad-overlay">
+            <div className="ad-card video-ad">
+              <video autoPlay loop muted playsInline poster="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600">
+                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" type="video/mp4" />
+              </video>
+              <div className="ad-overlay" onClick={() => { setView('products'); handleCategoryFilter('Makeup'); }}>
                 <h3>Makeup Essentials</h3>
                 <p>Discover Your Perfect Look</p>
               </div>
             </div>
-            <div className="ad-card" onClick={() => { setView('products'); handleCategoryFilter('Skincare'); }}>
-              <img src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=600" alt="Skincare" />
-              <div className="ad-overlay">
+            <div className="ad-card video-ad">
+              <video autoPlay loop muted playsInline poster="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=600">
+                <source src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" type="video/mp4" />
+              </video>
+              <div className="ad-overlay" onClick={() => { setView('products'); handleCategoryFilter('Skincare'); }}>
                 <h3>Skincare Routine</h3>
                 <p>Glow From Within</p>
               </div>
             </div>
-            <div className="ad-card" onClick={() => { setView('products'); handleCategoryFilter('Fragrance'); }}>
+            <div className="ad-card">
               <img src="https://images.unsplash.com/photo-1541643600914-78b084683601?w=600" alt="Fragrance" />
-              <div className="ad-overlay">
+              <div className="ad-overlay" onClick={() => { setView('products'); handleCategoryFilter('Fragrance'); }}>
                 <h3>Signature Scents</h3>
                 <p>Find Your Fragrance</p>
               </div>
@@ -571,15 +575,47 @@ function App() {
 
       {selectedProduct && (
         <div className="modal" onClick={() => setSelectedProduct(null)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
+          <div className="modal-content product-detail-modal" onClick={e => e.stopPropagation()}>
             <h2>{selectedProduct.name}</h2>
             <img src={selectedProduct.image_url} alt={selectedProduct.name} style={{width: '100%', maxHeight: '300px', objectFit: 'cover', borderRadius: '10px', marginBottom: '1rem'}} onError={(e) => e.target.src = 'https://via.placeholder.com/400/ff1493/ffffff?text=Product+Image'} />
-            <p><strong>Brand:</strong> {selectedProduct.brand}</p>
-            <p><strong>Category:</strong> {selectedProduct.category}</p>
-            <p><strong>Price:</strong> ₹{selectedProduct.price}</p>
-            <p><strong>Stock:</strong> {selectedProduct.stock} units</p>
-            <p>{selectedProduct.description}</p>
-            <button className="add-to-cart-btn" style={{width: '100%', marginTop: '1rem'}} onClick={() => { addToCart(selectedProduct); setSelectedProduct(null); }}>Add to Cart</button>
+            <div className="product-details">
+              <p><strong>Brand:</strong> {selectedProduct.brand}</p>
+              <p><strong>Category:</strong> {selectedProduct.category}</p>
+              <p><strong>Price:</strong> ₹{selectedProduct.price}</p>
+              <p><strong>Stock:</strong> {selectedProduct.stock} units</p>
+              <div className="product-description">
+                <strong>Description:</strong>
+                <p>{selectedProduct.description || 'Premium quality beauty product designed to enhance your natural beauty. Suitable for all skin types.'}</p>
+              </div>
+              <div className="product-options">
+                <div className="quantity-selector">
+                  <strong>Quantity:</strong>
+                  <div className="quantity-controls">
+                    <button onClick={() => setSelectedProduct({...selectedProduct, selectedQty: Math.max(1, (selectedProduct.selectedQty || 1) - 1)})}>-</button>
+                    <span>{selectedProduct.selectedQty || 1}</span>
+                    <button onClick={() => setSelectedProduct({...selectedProduct, selectedQty: (selectedProduct.selectedQty || 1) + 1})}>+</button>
+                  </div>
+                </div>
+                <div className="color-selector">
+                  <strong>Color:</strong>
+                  <div className="color-options">
+                    <div className="color-option" style={{background: '#FFB6C1'}} onClick={() => setSelectedProduct({...selectedProduct, selectedColor: 'Pink'})} title="Pink"></div>
+                    <div className="color-option" style={{background: '#FF6B9D'}} onClick={() => setSelectedProduct({...selectedProduct, selectedColor: 'Rose'})} title="Rose"></div>
+                    <div className="color-option" style={{background: '#C8A2C8'}} onClick={() => setSelectedProduct({...selectedProduct, selectedColor: 'Lilac'})} title="Lilac"></div>
+                    <div className="color-option" style={{background: '#DDA0DD'}} onClick={() => setSelectedProduct({...selectedProduct, selectedColor: 'Plum'})} title="Plum"></div>
+                    <div className="color-option" style={{background: '#F5DEB3'}} onClick={() => setSelectedProduct({...selectedProduct, selectedColor: 'Nude'})} title="Nude"></div>
+                  </div>
+                  {selectedProduct.selectedColor && <p className="selected-color">Selected: {selectedProduct.selectedColor}</p>}
+                </div>
+              </div>
+            </div>
+            <button className="add-to-cart-btn" style={{width: '100%', marginTop: '1rem'}} onClick={() => { 
+              const qty = selectedProduct.selectedQty || 1;
+              for(let i = 0; i < qty; i++) {
+                addToCart(selectedProduct);
+              }
+              setSelectedProduct(null); 
+            }}>Add {selectedProduct.selectedQty || 1} to Cart</button>
             <button className="close-btn" onClick={() => setSelectedProduct(null)}>Close</button>
           </div>
         </div>
