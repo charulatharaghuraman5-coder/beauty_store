@@ -268,6 +268,9 @@ function App() {
           <button className={`nav-btn ${selectedCategory === 'Haircare' ? 'active' : ''}`} onClick={() => { setView('products'); handleCategoryFilter('Haircare'); }}>Haircare</button>
           <button className={`nav-btn ${selectedCategory === 'Fragrance' ? 'active' : ''}`} onClick={() => { setView('products'); handleCategoryFilter('Fragrance'); }}>Fragrance</button>
           <button className={`nav-btn ${selectedCategory === 'Bath and Body' ? 'active' : ''}`} onClick={() => { setView('products'); handleCategoryFilter('Bath and Body'); }}>Bath & Body</button>
+          <button className={`nav-btn ${view === 'luxe' ? 'active' : ''}`} onClick={() => setView('luxe')}>Luxe</button>
+          <button className={`nav-btn ${view === 'sale' ? 'active' : ''}`} onClick={() => setView('sale')}>Beauty Fashion</button>
+          <button className={`nav-btn ${view === 'brands' ? 'active' : ''}`} onClick={() => setView('brands')}>Brands</button>
         </div>
         <div className="header-icons">
           <button className="icon-btn" onClick={() => setShowOrders(true)}>📦 Orders ({orders.length})</button>
@@ -284,7 +287,29 @@ function App() {
           </div>
           <div className="description-section">
             <h2>Description</h2>
-            <p>Welcome to our premium beauty store, your one-stop destination for all your beauty needs. We offer a carefully curated collection of high-quality skincare, makeup, haircare, fragrances, and bath & body products from trusted brands. Whether you're looking for the perfect lipstick, a nourishing face serum, or a luxurious fragrance, we have everything you need to look and feel your best. Shop with confidence and discover products that enhance your natural beauty.</p>
+            <p>Welcome to our premium beauty store, your one-stop destination for all your beauty needs. We offer a carefully curated collection of high-quality skincare, makeup, haircare, fragrances, and bath & body products from trusted brands.</p>
+            <div className="product-categories-desc">
+              <div className="category-desc">
+                <h3>💄 Makeup</h3>
+                <p>Discover our extensive range of makeup products including foundations, lipsticks, eyeshadow palettes, mascaras, and more. From everyday looks to glamorous evening styles.</p>
+              </div>
+              <div className="category-desc">
+                <h3>✨ Skincare</h3>
+                <p>Nourish your skin with our premium skincare collection featuring moisturizers, serums, face masks, cleansers, and sunscreens for all skin types.</p>
+              </div>
+              <div className="category-desc">
+                <h3>💇 Haircare</h3>
+                <p>Transform your hair with our professional haircare products including shampoos, conditioners, hair masks, serums, and styling treatments.</p>
+              </div>
+              <div className="category-desc">
+                <h3>🌸 Fragrance</h3>
+                <p>Explore our exquisite collection of perfumes and colognes with captivating scents from floral to musky, perfect for every occasion.</p>
+              </div>
+              <div className="category-desc">
+                <h3>🛁 Bath & Body</h3>
+                <p>Pamper yourself with our luxurious bath and body products including lotions, body butters, scrubs, and bath bombs for ultimate relaxation.</p>
+              </div>
+            </div>
           </div>
           <div className="search-container">
             <input className="search-bar" placeholder="Search products..." value={searchTerm} onChange={handleSearch} />
@@ -351,6 +376,95 @@ function App() {
                       <button className="add-to-cart-btn" onClick={(e) => { e.stopPropagation(); addToCart(p); }}>Add to Cart</button>
                     </div>
                   </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+
+
+      {view === 'luxe' && (
+        <>
+          <div className="banner">
+            <h1>✨ Luxe Collection</h1>
+            <p>Indulge in our premium luxury beauty products</p>
+          </div>
+          <div className="products-container">
+            <h2>Luxury Products</h2>
+            <div className="products-grid">
+              {allProducts.filter(p => p.price > 900).map(p => (
+                <div key={p.id} className="product-card luxe-card">
+                  <div className="luxe-badge">LUXE</div>
+                  <div className="product-image" onClick={() => viewProductDetails(p.id)}>
+                    <img src={p.image_url} alt={p.name} onError={(e) => e.target.src = 'https://via.placeholder.com/250/ff1493/ffffff?text=Luxury'} />
+                    <button className={`wishlist-btn ${wishlist.some(w => w.id === p.id) ? 'active' : ''}`} onClick={(e) => { e.stopPropagation(); toggleWishlist(p); }}>
+                      {wishlist.some(w => w.id === p.id) ? '❤️' : '🤍'}
+                    </button>
+                  </div>
+                  <div className="product-info">
+                    <div className="product-brand">{p.brand}</div>
+                    <div className="product-name">{p.name}</div>
+                    <div className="product-category">{p.category}</div>
+                    <div className="product-footer">
+                      <div className="product-price">₹{p.price}</div>
+                      <button className="add-to-cart-btn" onClick={(e) => { e.stopPropagation(); addToCart(p); }}>Add to Cart</button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+
+      {view === 'sale' && (
+        <>
+          <div className="banner sale-banner">
+            <h1>🎉 Beauty Fashion Sale</h1>
+            <p>Amazing deals on trending beauty products</p>
+          </div>
+          <div className="products-container">
+            <h2>Sale Products - Up to 30% Off</h2>
+            <div className="products-grid">
+              {allProducts.filter(p => p.price < 600).map(p => (
+                <div key={p.id} className="product-card sale-card">
+                  <div className="sale-badge">SALE 30% OFF</div>
+                  <div className="product-image" onClick={() => viewProductDetails(p.id)}>
+                    <img src={p.image_url} alt={p.name} onError={(e) => e.target.src = 'https://via.placeholder.com/250/ff1493/ffffff?text=Sale'} />
+                    <button className={`wishlist-btn ${wishlist.some(w => w.id === p.id) ? 'active' : ''}`} onClick={(e) => { e.stopPropagation(); toggleWishlist(p); }}>
+                      {wishlist.some(w => w.id === p.id) ? '❤️' : '🤍'}
+                    </button>
+                  </div>
+                  <div className="product-info">
+                    <div className="product-brand">{p.brand}</div>
+                    <div className="product-name">{p.name}</div>
+                    <div className="product-category">{p.category}</div>
+                    <div className="product-footer">
+                      <div className="product-price">₹{p.price}</div>
+                      <button className="add-to-cart-btn" onClick={(e) => { e.stopPropagation(); addToCart(p); }}>Add to Cart</button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </>
+      )}
+
+      {view === 'brands' && (
+        <>
+          <div className="banner">
+            <h1>🏷️ Our Brands</h1>
+            <p>Discover trusted beauty brands we carry</p>
+          </div>
+          <div className="brands-container">
+            <div className="brands-grid">
+              {[...new Set(allProducts.map(p => p.brand))].sort().map(brand => (
+                <div key={brand} className="brand-card">
+                  <h3>{brand}</h3>
+                  <p>{allProducts.filter(p => p.brand === brand).length} Products</p>
+                  <button className="view-brand-btn" onClick={() => { setView('products'); setProducts(allProducts.filter(p => p.brand === brand)); }}>View Products</button>
                 </div>
               ))}
             </div>
