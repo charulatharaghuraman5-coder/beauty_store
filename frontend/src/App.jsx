@@ -316,33 +316,40 @@ function App() {
           <div className="search-container">
             <input className="search-bar" placeholder="Search products..." value={searchTerm} onChange={handleSearch} />
           </div>
-          <div className="products-container">
-            <h2>Featured Products</h2>
-            {products.length === 0 ? (
-              <div className="no-products">Loading products...</div>
-            ) : (
-            <div className="products-grid">
-              {products.slice(0, 12).map(p => (
-                <div key={p.id} className="product-card">
-                  <div className="product-image" onClick={() => viewProductDetails(p.id)}>
-                    <img src={p.image_url || 'https://via.placeholder.com/250'} alt={p.name} onError={(e) => e.target.src = 'https://via.placeholder.com/250/ff1493/ffffff?text=Beauty+Product'} />
-                    <button className={`wishlist-btn ${wishlist.some(w => w.id === p.id) ? 'active' : ''}`} onClick={(e) => { e.stopPropagation(); toggleWishlist(p); }}>
-                      {wishlist.some(w => w.id === p.id) ? '❤️' : '🤍'}
-                    </button>
-                  </div>
-                  <div className="product-info">
-                    <div className="product-brand">{p.brand}</div>
-                    <div className="product-name">{p.name}</div>
-                    <div className="product-category">{p.category}</div>
-                    <div className="product-footer">
-                      <div className="product-price">₹{p.price}</div>
-                      <button className="add-to-cart-btn" onClick={(e) => { e.stopPropagation(); addToCart(p); }}>Add to Cart</button>
-                    </div>
-                  </div>
-                </div>
-              ))}
+          <div className="promo-section">
+            <div className="promo-banner sale-promo" onClick={() => setView('sale')}>
+              <h2>🎉 MEGA SALE</h2>
+              <p>Up to 30% OFF on Selected Products</p>
+              <button className="promo-btn">Shop Now</button>
             </div>
-            )}
+            <div className="promo-banner luxe-promo" onClick={() => setView('luxe')}>
+              <h2>✨ LUXE COLLECTION</h2>
+              <p>Premium Beauty Products</p>
+              <button className="promo-btn">Explore Luxury</button>
+            </div>
+          </div>
+          <div className="ads-section">
+            <div className="ad-card" onClick={() => { setView('products'); handleCategoryFilter('Makeup'); }}>
+              <img src="https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=600" alt="Makeup" />
+              <div className="ad-overlay">
+                <h3>Makeup Essentials</h3>
+                <p>Discover Your Perfect Look</p>
+              </div>
+            </div>
+            <div className="ad-card" onClick={() => { setView('products'); handleCategoryFilter('Skincare'); }}>
+              <img src="https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=600" alt="Skincare" />
+              <div className="ad-overlay">
+                <h3>Skincare Routine</h3>
+                <p>Glow From Within</p>
+              </div>
+            </div>
+            <div className="ad-card" onClick={() => { setView('products'); handleCategoryFilter('Fragrance'); }}>
+              <img src="https://images.unsplash.com/photo-1541643600914-78b084683601?w=600" alt="Fragrance" />
+              <div className="ad-overlay">
+                <h3>Signature Scents</h3>
+                <p>Find Your Fragrance</p>
+              </div>
+            </div>
           </div>
         </>
       )}

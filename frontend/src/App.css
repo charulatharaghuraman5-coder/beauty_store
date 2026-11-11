@@ -882,3 +882,114 @@
 .view-brand-btn:hover {
   background: #ff69b4;
 }
+
+.promo-section {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+  padding: 2rem;
+  margin: 2rem 0;
+}
+
+.promo-banner {
+  padding: 3rem;
+  border-radius: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s;
+  color: white;
+}
+
+.promo-banner:hover {
+  transform: scale(1.05);
+}
+
+.sale-promo {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ff1493 100%);
+}
+
+.luxe-promo {
+  background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+}
+
+.promo-banner h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.promo-banner p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.promo-btn {
+  background: white;
+  color: #ff1493;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.promo-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.ads-section {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.ad-card {
+  position: relative;
+  height: 300px;
+  border-radius: 15px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.ad-card:hover {
+  transform: translateY(-10px);
+}
+
+.ad-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ad-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+  padding: 2rem;
+  color: white;
+}
+
+.ad-overlay h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.ad-overlay p {
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .promo-section {
+    grid-template-columns: 1fr;
+  }
+  
+  .ads-section {
+    grid-template-columns: 1fr;
+  }
+}
