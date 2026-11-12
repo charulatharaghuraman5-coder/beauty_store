@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
 
-const API = window.location.hostname === 'localhost' ? '/api' : 'http://localhost:8000/api'
+const API = window.location.pathname.includes('/proxy/') ? '/proxy/8001/api' : '/api'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -10,38 +10,7 @@ function App() {
   const [loginUsername, setLoginUsername] = useState('')
   const [loginPassword, setLoginPassword] = useState('')
   const [view, setView] = useState('home')
-  const [products, setProducts] = useState([
-    {id: 1, name: 'Moisturizing Face Cream', brand: 'GlowSkin', price: 933.76, category: 'Skincare', image_url: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400', stock: 100},
-    {id: 2, name: 'Vitamin C Serum', brand: 'RadiantGlow', price: 914.78, category: 'Skincare', image_url: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400', stock: 100},
-    {id: 3, name: 'Matte Lipstick', brand: 'ColorPop', price: 904.73, category: 'Makeup', image_url: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400', stock: 100},
-    {id: 4, name: 'Eyeshadow Palette', brand: 'GlamourEyes', price: 678.86, category: 'Makeup', image_url: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=400', stock: 100},
-    {id: 5, name: 'Hydrating Shampoo', brand: 'SilkHair', price: 812.67, category: 'Haircare', image_url: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=400', stock: 100},
-    {id: 6, name: 'Hair Conditioner', brand: 'SilkHair', price: 799.86, category: 'Haircare', image_url: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=400', stock: 100},
-    {id: 7, name: 'Floral Perfume', brand: 'Essence', price: 338.3, category: 'Fragrance', image_url: 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=400', stock: 100},
-    {id: 8, name: 'Body Lotion', brand: 'SoftTouch', price: 946.21, category: 'Bath and Body', image_url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400', stock: 100},
-    {id: 9, name: 'Face Mask Set', brand: 'PureGlow', price: 931.35, category: 'Skincare', image_url: 'https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?w=400', stock: 100},
-    {id: 10, name: 'Nail Polish Set', brand: 'ColorNails', price: 507.9, category: 'Makeup', image_url: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=400', stock: 100},
-    {id: 11, name: 'Hyaluronic Acid Serum', brand: 'HydraBoost', price: 405.07, category: 'Skincare', image_url: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400', stock: 100},
-    {id: 12, name: 'Clay Face Mask', brand: 'PureGlow', price: 936.04, category: 'Skincare', image_url: 'https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?w=400', stock: 100},
-    {id: 13, name: 'Eye Cream', brand: 'YouthEyes', price: 720.41, category: 'Skincare', image_url: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400', stock: 100},
-    {id: 14, name: 'Sunscreen SPF 50', brand: 'SunGuard', price: 745.02, category: 'Skincare', image_url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400', stock: 100},
-    {id: 15, name: 'Liquid Foundation', brand: 'FlawlessBeauty', price: 984.45, category: 'Makeup', image_url: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400', stock: 100},
-    {id: 16, name: 'Lip Gloss Set', brand: 'GlossyLips', price: 508.06, category: 'Makeup', image_url: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400', stock: 100},
-    {id: 17, name: 'Contour Kit', brand: 'SculptPro', price: 997.04, category: 'Makeup', image_url: 'https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=400', stock: 100},
-    {id: 18, name: 'Brow Pencil', brand: 'BrowPerfect', price: 333.37, category: 'Makeup', image_url: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=400', stock: 100},
-    {id: 19, name: 'Setting Spray', brand: 'StayOn', price: 776.2, category: 'Makeup', image_url: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400', stock: 100},
-    {id: 20, name: 'Hair Mask', brand: 'SilkHair', price: 513.87, category: 'Haircare', image_url: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=400', stock: 100},
-    {id: 21, name: 'Dry Shampoo', brand: 'QuickFresh', price: 967.54, category: 'Haircare', image_url: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=400', stock: 100},
-    {id: 22, name: 'Hair Serum', brand: 'SmoothLocks', price: 314.88, category: 'Haircare', image_url: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=400', stock: 100},
-    {id: 23, name: 'Scalp Treatment', brand: 'HealthyRoots', price: 389.3, category: 'Haircare', image_url: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=400', stock: 100},
-    {id: 24, name: 'Lavender Perfume', brand: 'Serenity', price: 744.8, category: 'Fragrance', image_url: 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=400', stock: 100},
-    {id: 25, name: 'Musk Cologne', brand: 'Timeless', price: 741.2, category: 'Fragrance', image_url: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=400', stock: 100},
-    {id: 26, name: 'Jasmine Eau de Parfum', brand: 'Exotic', price: 894.84, category: 'Fragrance', image_url: 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=400', stock: 100},
-    {id: 27, name: 'Bath Bombs Set', brand: 'RelaxSpa', price: 900.52, category: 'Bath and Body', image_url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400', stock: 100},
-    {id: 28, name: 'Body Butter', brand: 'SoftTouch', price: 592.06, category: 'Bath and Body', image_url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400', stock: 100},
-    {id: 29, name: 'Foot Cream', brand: 'SmoothFeet', price: 739.8, category: 'Bath and Body', image_url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400', stock: 100},
-    {id: 30, name: 'Body Oil', brand: 'GlowBody', price: 565.26, category: 'Bath and Body', image_url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400', stock: 100}
-  ])
+  const [products, setProducts] = useState([])
   const [allProducts, setAllProducts] = useState([])
   const [categories, setCategories] = useState([])
   const [selectedCategory, setSelectedCategory] = useState(null)
@@ -65,39 +34,6 @@ function App() {
   const [selectedPayment, setSelectedPayment] = useState('')
 
   useEffect(() => {
-    const initialProducts = [
-      {id: 1, name: 'Moisturizing Face Cream', brand: 'GlowSkin', price: 933.76, category: 'Skincare', image_url: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400', stock: 100},
-      {id: 2, name: 'Vitamin C Serum', brand: 'RadiantGlow', price: 914.78, category: 'Skincare', image_url: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400', stock: 100},
-      {id: 3, name: 'Matte Lipstick', brand: 'ColorPop', price: 904.73, category: 'Makeup', image_url: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400', stock: 100},
-      {id: 4, name: 'Eyeshadow Palette', brand: 'GlamourEyes', price: 678.86, category: 'Makeup', image_url: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=400', stock: 100},
-      {id: 5, name: 'Hydrating Shampoo', brand: 'SilkHair', price: 812.67, category: 'Haircare', image_url: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=400', stock: 100},
-      {id: 6, name: 'Hair Conditioner', brand: 'SilkHair', price: 812.67, category: 'Haircare', image_url: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=400', stock: 100},
-      {id: 7, name: 'Floral Perfume', brand: 'Essence', price: 338.3, category: 'Fragrance', image_url: 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=400', stock: 100},
-      {id: 8, name: 'Body Lotion', brand: 'SoftTouch', price: 946.21, category: 'Bath and Body', image_url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400', stock: 100},
-      {id: 9, name: 'Face Mask Set', brand: 'PureGlow', price: 931.35, category: 'Skincare', image_url: 'https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?w=400', stock: 100},
-      {id: 10, name: 'Nail Polish Set', brand: 'ColorNails', price: 507.9, category: 'Makeup', image_url: 'https://images.unsplash.com/photo-1519823551278-64ac92734fb1?w=400', stock: 100},
-      {id: 11, name: 'Hyaluronic Acid Serum', brand: 'HydraBoost', price: 405.07, category: 'Skincare', image_url: 'https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400', stock: 100},
-      {id: 12, name: 'Clay Face Mask', brand: 'PureGlow', price: 946.21, category: 'Skincare', image_url: 'https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?w=400', stock: 100},
-      {id: 13, name: 'Eye Cream', brand: 'YouthEyes', price: 720.41, category: 'Skincare', image_url: 'https://images.unsplash.com/photo-1556228578-0d85b1a4d571?w=400', stock: 100},
-      {id: 14, name: 'Sunscreen SPF 50', brand: 'SunGuard', price: 745.02, category: 'Skincare', image_url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400', stock: 100},
-      {id: 15, name: 'Liquid Foundation', brand: 'FlawlessBeauty', price: 984.45, category: 'Makeup', image_url: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400', stock: 100},
-      {id: 16, name: 'Lip Gloss Set', brand: 'GlossyLips', price: 812.67, category: 'Makeup', image_url: 'https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400', stock: 100},
-      {id: 17, name: 'Contour Kit', brand: 'SculptPro', price: 997.04, category: 'Makeup', image_url: 'https://images.unsplash.com/photo-1596704017254-9b121068ec31?w=400', stock: 100},
-      {id: 18, name: 'Brow Pencil', brand: 'BrowPerfect', price: 333.37, category: 'Makeup', image_url: 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=400', stock: 100},
-      {id: 19, name: 'Setting Spray', brand: 'StayOn', price: 507.9, category: 'Makeup', image_url: 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400', stock: 100},
-      {id: 20, name: 'Hair Mask', brand: 'SilkHair', price: 513.87, category: 'Haircare', image_url: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=400', stock: 100},
-      {id: 21, name: 'Dry Shampoo', brand: 'QuickFresh', price: 967.54, category: 'Haircare', image_url: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=400', stock: 100},
-      {id: 22, name: 'Hair Serum', brand: 'SmoothLocks', price: 314.88, category: 'Haircare', image_url: 'https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=400', stock: 100},
-      {id: 23, name: 'Scalp Treatment', brand: 'HealthyRoots', price: 933.76, category: 'Haircare', image_url: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=400', stock: 100},
-      {id: 24, name: 'Lavender Perfume', brand: 'Serenity', price: 744.8, category: 'Fragrance', image_url: 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=400', stock: 100},
-      {id: 25, name: 'Musk Cologne', brand: 'Timeless', price: 741.2, category: 'Fragrance', image_url: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=400', stock: 100},
-      {id: 26, name: 'Jasmine Eau de Parfum', brand: 'Exotic', price: 894.84, category: 'Fragrance', image_url: 'https://images.unsplash.com/photo-1541643600914-78b084683601?w=400', stock: 100},
-      {id: 27, name: 'Bath Bombs Set', brand: 'RelaxSpa', price: 997.04, category: 'Bath and Body', image_url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400', stock: 100},
-      {id: 28, name: 'Body Butter', brand: 'SoftTouch', price: 592.06, category: 'Bath and Body', image_url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400', stock: 100},
-      {id: 29, name: 'Foot Cream', brand: 'SmoothFeet', price: 904.73, category: 'Bath and Body', image_url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400', stock: 100},
-      {id: 30, name: 'Body Oil', brand: 'GlowBody', price: 931.35, category: 'Bath and Body', image_url: 'https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400', stock: 100}
-    ]
-    setAllProducts(initialProducts)
     fetchProducts()
     fetchCategories()
   }, [])
@@ -117,11 +53,9 @@ function App() {
         if (!category && !search) setAllProducts(data)
       } else {
         console.error('API failed:', res.status)
-        setProducts([])
       }
     } catch (e) { 
       console.error('Fetch error:', e)
-      setProducts([])
     }
   }
 

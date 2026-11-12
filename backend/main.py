@@ -33,15 +33,18 @@ app.include_router(auth.router)
 def health_check():
     return {"status": "healthy"}
 
-if os.path.exists(frontend_dist):
-    app.mount("/assets", StaticFiles(directory=os.path.join(frontend_dist, "assets")), name="assets")
-    app.mount("/", StaticFiles(directory=frontend_dist, html=True), name="frontend")
-
 @app.get("/products-view")
 async def products_view():
     products_file = os.path.join(os.path.dirname(__file__), "products.html")
     if os.path.exists(products_file):
         return FileResponse(products_file)
+    return {"error": "not found"}
+
+@app.get("/simple")
+async def simple_products():
+    simple_file = os.path.join(os.path.dirname(__file__), "simple_products.html")
+    if os.path.exists(simple_file):
+        return FileResponse(simple_file)
     return {"error": "not found"}
 
 @app.get("/favicon.svg")
@@ -50,3 +53,7 @@ async def favicon():
     if os.path.exists(favicon_path):
         return FileResponse(favicon_path)
     return {"error": "not found"}
+
+if os.path.exists(frontend_dist):
+    app.mount("/assets", StaticFiles(directory=os.path.join(frontend_dist, "assets")), name="assets")
+    app.mount("/", StaticFiles(directory=frontend_dist, html=True), name="frontend")
