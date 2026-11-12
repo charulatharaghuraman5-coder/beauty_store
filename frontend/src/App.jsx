@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
 
-const API = window.location.pathname.includes('/proxy/') ? '/proxy/8001/api' : '/api'
+const API = window.location.pathname.includes('/codeeditor/default/ports/8001') ? '/codeeditor/default/ports/8001/api' : '/api'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -167,7 +167,48 @@ function App() {
     return (
       <div className="login-container">
         <div className="login-box">
-          <h1>🌸 Beauty Store</h1>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="120" height="120" style={{margin: '0 auto 20px', display: 'block'}}>
+            <defs>
+              <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style={{stopColor:'#ff1493',stopOpacity:1}} />
+                <stop offset="50%" style={{stopColor:'#ff69b4',stopOpacity:1}} />
+                <stop offset="100%" style={{stopColor:'#ff1493',stopOpacity:1}} />
+              </linearGradient>
+              <linearGradient id="goldShine" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style={{stopColor:'#ffd700',stopOpacity:1}} />
+                <stop offset="50%" style={{stopColor:'#ffed4e',stopOpacity:1}} />
+                <stop offset="100%" style={{stopColor:'#ff8c00',stopOpacity:1}} />
+              </linearGradient>
+              <radialGradient id="bgGlow">
+                <stop offset="0%" style={{stopColor:'#ff69b4',stopOpacity:0.4}} />
+                <stop offset="100%" style={{stopColor:'#ff1493',stopOpacity:0}} />
+              </radialGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <circle cx="100" cy="100" r="95" fill="url(#bgGlow)"/>
+            <circle cx="100" cy="100" r="88" fill="#fff" stroke="url(#pinkGrad)" strokeWidth="7" filter="url(#glow)"/>
+            <circle cx="100" cy="100" r="80" fill="none" stroke="url(#goldShine)" strokeWidth="3" strokeDasharray="8,4" opacity="0.8"/>
+            <circle cx="100" cy="100" r="72" fill="none" stroke="#ffc0cb" strokeWidth="1" strokeDasharray="3,2" opacity="0.5"/>
+            <path d="M 55,50 L 60,38 L 65,50 L 77,50 L 67,58 L 72,70 L 60,62 L 48,70 L 53,58 L 43,50 Z" fill="url(#goldShine)" filter="url(#glow)"/>
+            <path d="M 133,50 L 138,38 L 143,50 L 155,50 L 145,58 L 150,70 L 138,62 L 126,70 L 131,58 L 121,50 Z" fill="url(#goldShine)" filter="url(#glow)"/>
+            <ellipse cx="100" cy="40" rx="15" ry="10" fill="url(#goldShine)" opacity="0.6"/>
+            <path d="M 92,36 Q 100,30 108,36" stroke="url(#pinkGrad)" strokeWidth="2.5" fill="none"/>
+            <circle cx="35" cy="100" r="7" fill="url(#pinkGrad)" filter="url(#glow)"/>
+            <circle cx="165" cy="100" r="7" fill="url(#pinkGrad)" filter="url(#glow)"/>
+            <path d="M 60,125 Q 70,135 80,125" stroke="url(#pinkGrad)" strokeWidth="4" fill="none" strokeLinecap="round" filter="url(#glow)"/>
+            <path d="M 120,125 Q 130,135 140,125" stroke="url(#pinkGrad)" strokeWidth="4" fill="none" strokeLinecap="round" filter="url(#glow)"/>
+            <ellipse cx="100" cy="145" rx="25" ry="12" fill="url(#goldShine)" opacity="0.2"/>
+            <path d="M 40,80 L 43,73 L 46,80 L 53,80 L 47,85 L 50,92 L 43,87 L 36,92 L 39,85 L 33,80 Z" fill="#ff69b4" opacity="0.7"/>
+            <path d="M 147,80 L 150,73 L 153,80 L 160,80 L 154,85 L 157,92 L 150,87 L 143,92 L 146,85 L 140,80 Z" fill="#ff69b4" opacity="0.7"/>
+            <circle cx="100" cy="100" r="4" fill="url(#goldShine)"/>
+            <path d="M 75,60 Q 80,55 85,60" stroke="#ff69b4" strokeWidth="2" fill="none" opacity="0.6"/>
+            <path d="M 115,60 Q 120,55 125,60" stroke="#ff69b4" strokeWidth="2" fill="none" opacity="0.6"/>
+            <text x="100" y="88" fontFamily="'Arial Black', Arial, sans-serif" fontSize="30" fontWeight="900" fill="url(#pinkGrad)" textAnchor="middle" letterSpacing="2" filter="url(#glow)">BEAUTY</text>
+            <text x="100" y="118" fontFamily="'Arial Black', Arial, sans-serif" fontSize="26" fontWeight="900" fill="url(#goldShine)" textAnchor="middle" letterSpacing="3" filter="url(#glow)">STORE</text>
+          </svg>
           <h2>Create Account</h2>
           <form onSubmit={handleLogin}>
             <input
@@ -194,7 +235,25 @@ function App() {
   return (
     <div className="App">
       <div className="header">
-        <div className="logo" onClick={() => setView('home')}>🌸 Beauty Store</div>
+        <div className="logo" onClick={() => setView('home')} style={{display: 'flex', alignItems: 'center', cursor: 'pointer'}}>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 140 140" width="45" height="45" style={{marginRight: '10px'}}>
+            <defs>
+              <linearGradient id="pinkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style={{stopColor:'#ff1493',stopOpacity:1}} />
+                <stop offset="50%" style={{stopColor:'#ff69b4',stopOpacity:1}} />
+                <stop offset="100%" style={{stopColor:'#ff1493',stopOpacity:1}} />
+              </linearGradient>
+            </defs>
+            <circle cx="70" cy="70" r="65" fill="#fff" stroke="url(#pinkGrad)" strokeWidth="4"/>
+            <path d="M 40,35 L 42,30 L 44,35 L 49,35 L 45,38 L 47,43 L 42,40 L 37,43 L 39,38 L 35,35 Z" fill="#ff69b4" opacity="0.7"/>
+            <path d="M 96,35 L 98,30 L 100,35 L 105,35 L 101,38 L 103,43 L 98,40 L 93,43 L 95,38 L 91,35 Z" fill="#ff69b4" opacity="0.7"/>
+            <circle cx="30" cy="70" r="4" fill="#ff1493" opacity="0.6"/>
+            <circle cx="110" cy="70" r="4" fill="#ff1493" opacity="0.6"/>
+            <text x="70" y="62" fontFamily="'Arial Black', Arial, sans-serif" fontSize="24" fontWeight="900" fill="#ff1493" textAnchor="middle" letterSpacing="1">BEAUTY</text>
+            <text x="70" y="85" fontFamily="'Arial Black', Arial, sans-serif" fontSize="20" fontWeight="900" fill="#ff69b4" textAnchor="middle" letterSpacing="2">STORE</text>
+          </svg>
+          <span style={{fontFamily: 'Arial, sans-serif', fontWeight: '700', letterSpacing: '1px', color: '#ff1493'}}>Beauty Store</span>
+        </div>
         <div className="username-display">Welcome, {username}!</div>
         <div className="nav">
           <button className={`nav-btn ${view === 'home' ? 'active' : ''}`} onClick={() => setView('home')}>Home</button>
