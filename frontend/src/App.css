@@ -1067,3 +1067,67 @@
   color: #ff1493;
   font-weight: 600;
 }
+
+/* Tracking Timeline */
+.tracking-timeline {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: white;
+  border-radius: 10px;
+  border: 2px solid #ff1493;
+}
+
+.tracking-timeline h4 {
+  color: #ff1493;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.tracking-step {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.tracking-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 30px;
+  width: 2px;
+  height: calc(100% + 10px);
+  background: #ff1493;
+}
+
+.tracking-dot {
+  width: 20px;
+  height: 20px;
+  background: #ff1493;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 3px;
+  box-shadow: 0 0 0 4px rgba(255, 20, 147, 0.2);
+}
+
+.tracking-info {
+  flex: 1;
+}
+
+.tracking-info strong {
+  color: #333;
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 1rem;
+}
+
+.tracking-info p {
+  color: #666;
+  margin: 0.2rem 0;
+  font-size: 0.9rem;
+}
+
+.tracking-info small {
+  color: #999;
+  font-size: 0.85rem;
+}

@@ -176,8 +176,11 @@ function App() {
             paymentMethod: 'Razorpay',
             paymentId: response.razorpay_payment_id,
             date: new Date().toLocaleDateString(),
-            status: 'Processing',
-            trackingId: `TRK${Date.now()}`
+            status: 'Order Placed',
+            trackingId: `TRK${Date.now()}`,
+            trackingHistory: [
+              { status: 'Order Placed', date: new Date().toLocaleString(), description: 'Your order has been placed successfully' }
+            ]
           }
           setOrders([...orders, newOrder])
           alert(`Payment Successful!\n\nOrder ID: ${newOrder.id}\nTracking ID: ${newOrder.trackingId}\nPayment ID: ${response.razorpay_payment_id}\nTotal: ₹${cartTotal.toFixed(2)}`)
@@ -658,6 +661,21 @@ function App() {
                   <p><strong>Payment:</strong> {order.paymentMethod}</p>
                   <p><strong>Total:</strong> ₹{order.total.toFixed(2)}</p>
                   <p><strong>Delivery to:</strong> {order.shippingDetails.name}, {order.shippingDetails.address}</p>
+                  
+                  <div className="tracking-timeline">
+                    <h4>Order Tracking</h4>
+                    {order.trackingHistory && order.trackingHistory.map((track, idx) => (
+                      <div key={idx} className="tracking-step">
+                        <div className="tracking-dot"></div>
+                        <div className="tracking-info">
+                          <strong>{track.status}</strong>
+                          <p>{track.description}</p>
+                          <small>{track.date}</small>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  
                   <div className="order-items">
                     <strong>Items:</strong>
                     {order.items.map(item => (

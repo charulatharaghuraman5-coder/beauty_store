@@ -1,0 +1,60 @@
+╔══════════════════════════════════════════════════════════════╗
+║          BACKEND DEPLOYMENT - COPY & PASTE VALUES            ║
+╚══════════════════════════════════════════════════════════════╝
+
+📍 URL: https://render.com/dashboard
+🔘 Click: "New +" → "Web Service" → Select "beauty_store"
+
+┌──────────────────────────────────────────────────────────────┐
+│ CONFIGURATION VALUES (Copy these exactly)                    │
+└──────────────────────────────────────────────────────────────┘
+
+Name:
+beauty-store-backend
+
+Branch:
+main
+
+Root Directory:
+backend
+
+Runtime:
+Python 3
+
+Build Command:
+pip install -r requirements.txt
+
+Start Command:
+uvicorn main:app --host 0.0.0.0 --port $PORT
+
+┌──────────────────────────────────────────────────────────────┐
+│ ENVIRONMENT VARIABLES (Add 4 variables)                      │
+└──────────────────────────────────────────────────────────────┘
+
+Variable 1:
+Key: DATABASE_URL
+Value: sqlite:///./beauty.db
+
+Variable 2:
+Key: SECRET_KEY
+Value: my-secret-key-12345
+
+Variable 3:
+Key: RAZORPAY_KEY_ID
+Value: [YOUR_RAZORPAY_LIVE_KEY_HERE]
+
+Variable 4:
+Key: RAZORPAY_KEY_SECRET
+Value: [YOUR_RAZORPAY_LIVE_SECRET_HERE]
+
+┌──────────────────────────────────────────────────────────────┐
+│ FINAL STEP                                                   │
+└──────────────────────────────────────────────────────────────┘
+
+✅ Click "Create Web Service"
+⏳ Wait 2-3 minutes
+📋 COPY THE URL (looks like: https://beauty-store-backend.onrender.com)
+
+═══════════════════════════════════════════════════════════════
+
+After deployment, tell me the backend URL and I'll help with frontend!
