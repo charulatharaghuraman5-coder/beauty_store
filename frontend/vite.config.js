@@ -6,7 +6,7 @@ export default defineConfig({
   base: './',
   server: {
     host: '0.0.0.0',
-    port: 5173,
+    port: 8001,
     strictPort: false,
     allowedHosts: [
       'fyoyp1eigmstsgr.studio.us-east-1.sagemaker.aws',
@@ -15,7 +15,7 @@ export default defineConfig({
       '.amazonaws.com'
     ],
     hmr: {
-      clientPort: 5173
+      clientPort: 8001
     },
     proxy: {
       '/api': {

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
 
-const API = window.location.pathname.includes('/codeeditor/default/ports/8001') ? '/codeeditor/default/ports/8001/api' : '/api'
+const API = window.location.pathname.includes('/codeeditor/default/ports/8000') 
+  ? '/codeeditor/default/ports/8000/api' 
+  : '/api'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -122,18 +124,95 @@ function App() {
     }
   }
 
-  const handlePlaceOrder = (e) => {
+  const handlePlaceOrder = async (e) => {
     e.preventDefault()
     setShowCheckout(false)
-    setShowPayment(true)
-  }
-
-  const handlePayment = () => {
-    if (selectedPayment) {
-      setShowPayment(false)
-      setShowQRCode(true)
+    
+    // Check if Razorpay is loaded
+    if (typeof window.Razorpay === 'undefined') {
+      alert('Razorpay SDK not loaded. Please refresh the page and try again.')
+      setShowCheckout(true)
+      return
+    }
+    
+    // Directly initiate Razorpay payment
+    try {
+      const response = await fetch(`${API}/payment/create-order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: cartTotal })
+      })
+      
+      if (!response.ok) {
+        throw new Error('Failed to create order')
+      }
+      
+      const orderData = await response.json()
+      console.log('Order created:', orderData)
+      
+      const options = {
+        key: orderData.key,
+        amount: orderData.amount,
+        currency: orderData.currency,
+        name: 'Beauty Store',
+        description: 'Purchase from Beauty Store',
+        order_id: orderData.order_id,
+        prefill: {
+          name: shippingDetails.name,
+          contact: shippingDetails.mobile
+        },
+        method: {
+          upi: true,
+          card: true,
+          netbanking: true,
+          wallet: true
+        },
+        handler: function (response) {
+          const newOrder = {
+            id: Date.now(),
+            items: [...cart],
+            total: cartTotal,
+            shippingDetails: {...shippingDetails},
+            paymentMethod: 'Razorpay',
+            paymentId: response.razorpay_payment_id,
+            date: new Date().toLocaleDateString(),
+            status: 'Processing',
+            trackingId: `TRK${Date.now()}`
+          }
+          setOrders([...orders, newOrder])
+          alert(`Payment Successful!\n\nOrder ID: ${newOrder.id}\nTracking ID: ${newOrder.trackingId}\nPayment ID: ${response.razorpay_payment_id}\nTotal: ₹${cartTotal.toFixed(2)}`)
+          setCart([])
+          setShippingDetails({ name: '', address: '', mobile: '', pincode: '' })
+        },
+        modal: {
+          ondismiss: function() {
+            alert('Payment cancelled. Please try again.')
+            setShowCheckout(true)
+          }
+        },
+        theme: {
+          color: '#ff1493'
+        }
+      }
+      
+      console.log('Opening Razorpay with options:', options)
+      const razorpay = new window.Razorpay(options)
+      
+      razorpay.on('payment.failed', function (response) {
+        console.error('Payment failed:', response.error)
+        alert(`Payment Failed!\n\nReason: ${response.error.description}\nPlease try again.`)
+        setShowCheckout(true)
+      })
+      
+      razorpay.open()
+    } catch (error) {
+      console.error('Payment error:', error)
+      alert('Error initiating payment. Please try again.')
+      setShowCheckout(true)
     }
   }
+
+
 
   const handlePaymentComplete = () => {
     const newOrder = {
@@ -156,11 +235,38 @@ function App() {
 
   const handleLogin = (e) => {
     e.preventDefault()
-    if (loginUsername && loginPassword) {
-      setUsername(loginUsername)
-      setIsLoggedIn(true)
-      setShowLoginForm(false)
+    
+    // Validate username (only alphabets)
+    if (!/^[a-zA-Z]+$/.test(loginUsername)) {
+      alert('Username must contain only alphabets')
+      return
     }
+    
+    // Validate password (min 12 chars, uppercase, lowercase, number, special char)
+    if (loginPassword.length < 12) {
+      alert('Password must be at least 12 characters long')
+      return
+    }
+    if (!/[a-z]/.test(loginPassword)) {
+      alert('Password must contain at least one lowercase letter')
+      return
+    }
+    if (!/[A-Z]/.test(loginPassword)) {
+      alert('Password must contain at least one uppercase letter')
+      return
+    }
+    if (!/[0-9]/.test(loginPassword)) {
+      alert('Password must contain at least one number')
+      return
+    }
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(loginPassword)) {
+      alert('Password must contain at least one special character')
+      return
+    }
+    
+    setUsername(loginUsername)
+    setIsLoggedIn(true)
+    setShowLoginForm(false)
   }
 
   if (!isLoggedIn) {
@@ -657,46 +763,9 @@ function App() {
         </div>
       )}
 
-      {showPayment && (
-        <div className="modal" onClick={() => setShowPayment(false)}>
-          <div className="modal-content" onClick={e => e.stopPropagation()}>
-            <h2>Select Payment Method</h2>
-            <div className="payment-options">
-              <div className={`payment-option ${selectedPayment === 'GPay' ? 'selected' : ''}`} onClick={() => setSelectedPayment('GPay')}>
-                <div className="payment-icon">💳</div>
-                <div>Google Pay</div>
-              </div>
-              <div className={`payment-option ${selectedPayment === 'PhonePe' ? 'selected' : ''}`} onClick={() => setSelectedPayment('PhonePe')}>
-                <div className="payment-icon">💳</div>
-                <div>PhonePe</div>
-              </div>
-              <div className={`payment-option ${selectedPayment === 'Paytm' ? 'selected' : ''}`} onClick={() => setSelectedPayment('Paytm')}>
-                <div className="payment-icon">💳</div>
-                <div>Paytm</div>
-              </div>
-            </div>
-            <div className="cart-total">Total Amount: ₹{cartTotal.toFixed(2)}</div>
-            <button className="checkout-btn" onClick={handlePayment} disabled={!selectedPayment}>Pay Now</button>
-            <button className="close-btn" onClick={() => setShowPayment(false)}>Cancel</button>
-          </div>
-        </div>
-      )}
 
-      {showQRCode && (
-        <div className="modal" onClick={() => setShowQRCode(false)}>
-          <div className="modal-content qr-modal" onClick={e => e.stopPropagation()}>
-            <h2>Scan QR Code to Pay</h2>
-            <p>Payment Method: <strong>{selectedPayment}</strong></p>
-            <div className="qr-code">
-              <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=upi://pay?pa=merchant@upi&pn=BeautyStore&am={cartTotal.toFixed(2)}&cu=INR" alt="QR Code" />
-            </div>
-            <div className="cart-total">Amount: ₹{cartTotal.toFixed(2)}</div>
-            <p className="qr-instruction">Scan this QR code with your {selectedPayment} app to complete payment</p>
-            <button className="checkout-btn" onClick={handlePaymentComplete}>Payment Done</button>
-            <button className="close-btn" onClick={() => setShowQRCode(false)}>Cancel</button>
-          </div>
-        </div>
-      )}
+
+
     </div>
   )
 }
