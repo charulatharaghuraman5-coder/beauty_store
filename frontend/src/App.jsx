@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
+import AIChat from './AIChat'
 
 const API = window.location.pathname.includes('/codeeditor/default/ports/8000') 
   ? '/codeeditor/default/ports/8000/api' 
@@ -784,6 +785,7 @@ function App() {
 
 
 
+      <AIChat />
     </div>
   )
 }
