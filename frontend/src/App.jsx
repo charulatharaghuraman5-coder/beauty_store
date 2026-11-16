@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react'
 import './App.css'
 import AIChat from './AIChat'
 
-const API = window.location.pathname.includes('/codeeditor/default/ports/8000') 
+const API = import.meta.env.VITE_API_URL || (window.location.pathname.includes('/codeeditor/default/ports/8000') 
   ? '/codeeditor/default/ports/8000/api' 
-  : '/api'
+  : '/api')
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
