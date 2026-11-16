@@ -33,7 +33,7 @@ app.include_router(auth.router)
 def health_check():
     return {"status": "healthy"}
 
-@app.post("/api/seed")
+@app.get("/api/seed")
 def seed_database():
     """Seed the database with sample products"""
     db = SessionLocal()
