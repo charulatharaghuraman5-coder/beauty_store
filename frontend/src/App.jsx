@@ -46,7 +46,7 @@ function App() {
 
   const fetchProducts = async (category = null, search = null) => {
     try {
-      let url = `${API}/products/?limit=1000`
+      let url = `${API}/api/products/?limit=1000`
       if (category) url += `&category=${encodeURIComponent(category)}`
       if (search) url += `&search=${encodeURIComponent(search)}`
       console.log('Fetching:', url)
@@ -66,13 +66,13 @@ function App() {
   }
 
   const fetchCategories = async () => {
-    const res = await fetch(`${API}/products/categories/all`)
+    const res = await fetch(`${API}/api/products/categories/all`)
     if (res.ok) setCategories((await res.json()).categories)
   }
 
   const viewProductDetails = async (productId) => {
     try {
-      const res = await fetch(`${API}/products/${productId}`)
+      const res = await fetch(`${API}/api/products/${productId}`)
       if (res.ok) {
         const product = await res.json()
         setSelectedProduct(product)
