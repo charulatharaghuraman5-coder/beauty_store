@@ -43,13 +43,13 @@ def seed_database():
             return {"message": f"Database already has {existing} products"}
         
         sample_products = [
-            {"name": "Hydrating Face Serum", "price": 1299.00, "category": "Skincare", "brand": "GlowLab", "image_url": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400", "stock": 50},
-            {"name": "Vitamin C Cream", "price": 899.00, "category": "Skincare", "brand": "RadiantSkin", "image_url": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400", "stock": 75},
-            {"name": "Matte Lipstick", "price": 699.00, "category": "Makeup", "brand": "ColorPop", "image_url": "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400", "stock": 120},
-            {"name": "HD Foundation", "price": 1499.00, "category": "Makeup", "brand": "FlawlessBeauty", "image_url": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400", "stock": 60},
-            {"name": "Argan Hair Serum", "price": 799.00, "category": "Haircare", "brand": "SilkHair", "image_url": "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=400", "stock": 80},
-            {"name": "Rose Perfume", "price": 2499.00, "category": "Fragrance", "brand": "LuxeScent", "image_url": "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400", "stock": 35},
-            {"name": "Lavender Lotion", "price": 599.00, "category": "Bath and Body", "brand": "BodyBliss", "image_url": "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400", "stock": 110},
+            {"name": "Hydrating Face Serum", "description": "Intensive hydration serum", "price": 1299.00, "category": "Skincare", "brand": "GlowLab", "image_url": "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400", "stock": 50},
+            {"name": "Vitamin C Cream", "description": "Brightening day cream", "price": 899.00, "category": "Skincare", "brand": "RadiantSkin", "image_url": "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=400", "stock": 75},
+            {"name": "Matte Lipstick", "description": "Long-lasting matte lipstick", "price": 699.00, "category": "Makeup", "brand": "ColorPop", "image_url": "https://images.unsplash.com/photo-1586495777744-4413f21062fa?w=400", "stock": 120},
+            {"name": "HD Foundation", "description": "Full coverage foundation", "price": 1499.00, "category": "Makeup", "brand": "FlawlessBeauty", "image_url": "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400", "stock": 60},
+            {"name": "Argan Hair Serum", "description": "Nourishing hair serum", "price": 799.00, "category": "Haircare", "brand": "SilkHair", "image_url": "https://images.unsplash.com/photo-1535585209827-a15fcdbc4c2d?w=400", "stock": 80},
+            {"name": "Rose Perfume", "description": "Elegant floral fragrance", "price": 2499.00, "category": "Fragrance", "brand": "LuxeScent", "image_url": "https://images.unsplash.com/photo-1541643600914-78b084683601?w=400", "stock": 35},
+            {"name": "Lavender Lotion", "description": "Moisturizing body lotion", "price": 599.00, "category": "Bath and Body", "brand": "BodyBliss", "image_url": "https://images.unsplash.com/photo-1556228578-8c89e6adf883?w=400", "stock": 110},
         ]
         
         for p in sample_products:
