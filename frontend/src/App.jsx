@@ -6,6 +6,9 @@ const API = import.meta.env.VITE_API_URL || (window.location.pathname.includes('
   ? '/codeeditor/default/ports/8000/api' 
   : '/api')
 
+console.log('API URL:', API)
+console.log('ENV:', import.meta.env.VITE_API_URL)
+
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [username, setUsername] = useState('')
